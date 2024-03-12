@@ -77,9 +77,11 @@ class Keenetic(DeviceScanner):
                 "uptime": device.uptime,
                 "hostname": device.hostname,
             }
-            if "ssid" in keys: # wireless
-                info.update({"ssid": device.ssid, "rssi": device.rssi})
-            elif "port" in keys: # wired
+            if "rssi" in keys: # wireless                                        
+                info.update({"ssid": device.ssid, "rssi": device.rssi})          
+            elif "mws" in keys and "rssi" in device.mws.keys(): # wifi system    
+                info.update({"rssi": device.mws["rssi"]})                        
+            elif "port" in keys: # wired                                         
                 info.update({"port": device.port, "speed": device.speed, "duplex": device.duplex})
             return info
         return {}
